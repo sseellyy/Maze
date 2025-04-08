@@ -4,6 +4,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Random;
 
+
 public class MazeGame extends JPanel {
     private static final int CELL_SIZE = 30;
     private static final int ROWS = 15;
