@@ -95,11 +95,11 @@ public class MazeGame extends JPanel {
         super.paintComponent(g);
         for (int r = 0; r < ROWS; r++) {
             for (int c = 0; c < COLS; c++) {
-                if (maze[r][c] == WALL) g.setColor(Color.BLACK);
+                if (maze[r][c] == WALL) g.setColor(Color.BLUE);
                 else if (maze[r][c] == PATH) g.setColor(Color.WHITE);
                 else if (maze[r][c] == VISITED) g.setColor(Color.PINK);
-                else if (maze[r][c] == PLAYER) g.setColor(Color.BLUE);
-                else if (maze[r][c] == EXIT) g.setColor(Color.RED);
+                else if (maze[r][c] == PLAYER) g.setColor(Color.RED);
+                else if (maze[r][c] == EXIT) g.setColor(Color.YELLOW);
                 g.fillRect(c * CELL_SIZE, r * CELL_SIZE, CELL_SIZE, CELL_SIZE);
             }
         }
