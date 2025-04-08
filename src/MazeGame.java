@@ -37,6 +37,8 @@ public class MazeGame extends JPanel {
         recursiveBacktracking(1, 1);
         maze[1][1] = PLAYER;
         maze[ROWS - 2][COLS - 2] = EXIT;
+        playerRow = 1;
+        playerCol = 1;
     }
 
     private void recursiveBacktracking(int r, int c) {
