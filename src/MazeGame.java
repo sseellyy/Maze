@@ -3,7 +3,6 @@ import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Random;
-import java.util.Stack;
 
 public class MazeGame extends JPanel {
     private static final int CELL_SIZE = 30;
@@ -76,8 +75,14 @@ public class MazeGame extends JPanel {
             playerRow = newRow;
             playerCol = newCol;
             if (maze[playerRow][playerCol] == EXIT) {
-                JOptionPane.showMessageDialog(this, "Вы выиграли!");
-                generateMaze();
+                int option = JOptionPane.showOptionDialog(this, "Вы выиграли! Хотите начать заново?", "Победа!",
+                        JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+                if (option == JOptionPane.YES_OPTION) {
+                    generateMaze();
+                    repaint();
+                } else {
+                    System.exit(0);
+                }
             }
             maze[playerRow][playerCol] = PLAYER;
         }
