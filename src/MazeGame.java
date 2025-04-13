@@ -21,11 +21,11 @@ public class MazeGame extends JPanel {
     private static final int SOLUTION = 5;  // Клетка, входящая в найденный путь
 
     // Массив, представляющий лабиринт
-    private int[][] maze = new int[ROWS][COLS];
+    private final int[][] maze = new int[ROWS][COLS];
 
     // Начальная и конечная позиции
-    private int startRow = 1, startCol = 1;
-    private int exitRow = ROWS - 2, exitCol = COLS - 2;
+    private final int startRow = 1;
+    private final int startCol = 1;
 
     // Конструктор — вызывается при создании панели
     public MazeGame() {
@@ -51,6 +51,8 @@ public class MazeGame extends JPanel {
 
         // Устанавливаем начальную и конечную клетки
         maze[startRow][startCol] = PATH;
+        int exitRow = ROWS - 2;
+        int exitCol = COLS - 2;
         maze[exitRow][exitCol] = EXIT;
 
         repaint(); // Перерисовываем лабиринт
