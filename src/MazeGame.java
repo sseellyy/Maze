@@ -109,9 +109,9 @@ public class MazeGame extends JPanel {
 
             // Если найден путь, показать диалог с выбором
             if (solved) {
-                int option = JOptionPane.showOptionDialog(this, "Путь найден! Что вы хотите сделать?",
-                        "Победа!", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE,
-                        null, new Object[]{"Новый лабиринт", "Выход"}, "Новый лабиринт");
+                int option = JOptionPane.showOptionDialog(this, "The path is found! What do you want to do?",
+                        "Victory!", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE,
+                        null, new Object[]{"New Maze", "Exit"}, "New Maze");
 
                 if (option == JOptionPane.YES_OPTION) {
                     generateMaze();   // Снова генерируем лабиринт
