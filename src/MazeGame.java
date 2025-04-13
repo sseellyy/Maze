@@ -16,11 +16,11 @@ public class MazeGame extends JPanel {
     private static final int VISITED = 4;
     private static final int SOLUTION = 5;
 
-    private int[][] maze = new int[ROWS][COLS];
+    private final int[][] maze = new int[ROWS][COLS];
 
     // Начало и конец
-    private int startRow = 1, startCol = 1;
-    private int exitRow = ROWS - 2, exitCol = COLS - 2;
+    private final int startRow = 1;
+    private final int startCol = 1;
 
     public MazeGame() {
         setPreferredSize(new Dimension(COLS * CELL_SIZE, ROWS * CELL_SIZE));
@@ -43,6 +43,8 @@ public class MazeGame extends JPanel {
 
         // Установка старта и финиша
         maze[startRow][startCol] = PATH;
+        int exitRow = ROWS - 2;
+        int exitCol = COLS - 2;
         maze[exitRow][exitCol] = EXIT;
 
         repaint();
