@@ -8,14 +8,17 @@ public class MazeGame extends JPanel {
     private static final int ROWS = 15;
     private static final int COLS = 15;
 
+    // Типы клеток
     private static final int WALL = 1;
     private static final int PATH = 0;
     private static final int PLAYER = 2;
     private static final int EXIT = 3;
     private static final int VISITED = 4;
+    private static final int SOLUTION = 5;
 
     private int[][] maze = new int[ROWS][COLS];
 
+    // Начало и конец
     private int startRow = 1, startCol = 1;
     private int exitRow = ROWS - 2, exitCol = COLS - 2;
 
@@ -24,19 +27,24 @@ public class MazeGame extends JPanel {
         setFocusable(true);
 
         generateMaze();
-        startSolving(); // Стартуем решение
+        startSolving(); // Автостарт решения
     }
 
     private void generateMaze() {
+        // Заполнение стенами
         for (int r = 0; r < ROWS; r++) {
             for (int c = 0; c < COLS; c++) {
                 maze[r][c] = WALL;
             }
         }
 
+        // Генерация пути
         recursiveBacktracking(startRow, startCol);
+
+        // Установка старта и финиша
         maze[startRow][startCol] = PATH;
         maze[exitRow][exitCol] = EXIT;
+
         repaint();
     }
 
@@ -67,27 +75,28 @@ public class MazeGame extends JPanel {
 
     private void startSolving() {
         new Thread(() -> {
-            // Очищаем предыдущие следы
+            // Очистка следов от предыдущего запуска
             for (int r = 0; r < ROWS; r++) {
                 for (int c = 0; c < COLS; c++) {
-                    if (maze[r][c] == VISITED || maze[r][c] == PLAYER) {
+                    if (maze[r][c] == VISITED || maze[r][c] == PLAYER || maze[r][c] == SOLUTION) {
                         maze[r][c] = PATH;
                     }
                 }
             }
-            // Запускаем решение
+
             boolean solved = solveMaze(startRow, startCol);
+
             if (solved) {
-                // Диалог выбора действия
+                // Показываем диалог после успешного прохождения
                 int option = JOptionPane.showOptionDialog(this, "Путь найден! Что вы хотите сделать?",
-                        "Успешно!", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE,
+                        "Победа!", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE,
                         null, new Object[]{"Новый лабиринт", "Выход"}, "Новый лабиринт");
 
                 if (option == JOptionPane.YES_OPTION) {
-                    generateMaze();      // генерируем новый
-                    startSolving();      // запускаем решение снова
+                    generateMaze();
+                    startSolving();
                 } else {
-                    System.exit(0);      // выходим
+                    System.exit(0);
                 }
             }
         }).start();
@@ -98,7 +107,7 @@ public class MazeGame extends JPanel {
             return false;
 
         if (maze[r][c] == EXIT) {
-            maze[r][c] = PLAYER;
+            maze[r][c] = SOLUTION;
             repaintDelay();
             return true;
         }
@@ -109,7 +118,7 @@ public class MazeGame extends JPanel {
         maze[r][c] = VISITED;
 
         if (solveMaze(r - 1, c) || solveMaze(r + 1, c) || solveMaze(r, c - 1) || solveMaze(r, c + 1)) {
-            maze[r][c] = PLAYER;
+            maze[r][c] = SOLUTION;
             repaintDelay();
             return true;
         }
@@ -119,7 +128,7 @@ public class MazeGame extends JPanel {
 
     private void repaintDelay() {
         try {
-            Thread.sleep(30);  // задержка для визуализации
+            Thread.sleep(30); // Задержка для визуализации
         } catch (InterruptedException ignored) {}
         repaint();
     }
@@ -136,6 +145,7 @@ public class MazeGame extends JPanel {
                     case VISITED -> g.setColor(Color.PINK);
                     case PLAYER -> g.setColor(Color.RED);
                     case EXIT -> g.setColor(Color.YELLOW);
+                    case SOLUTION -> g.setColor(Color.GREEN);
                 }
                 g.fillRect(c * CELL_SIZE, r * CELL_SIZE, CELL_SIZE, CELL_SIZE);
             }
