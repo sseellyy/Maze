@@ -227,8 +227,6 @@ main()
 █             E █
 █████████████████
 
-![image](https://github.com/user-attachments/assets/959f5756-358d-4d8f-8549-4d0bd2533bbf)
-
 ```
 
 (Где `E` — выход, `█` — стены, пробелы — путь)
